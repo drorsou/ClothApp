@@ -1,0 +1,77 @@
+<html ng-app="clothApp" dir="rtl">
+    <head>
+
+        <title>ClothApp</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link href="http://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css" />
+        
+        <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+      
+    </head>    
+
+    <body ng-controller="clothCtrl">
+        <div id="wrapper">
+            <div id="wrapper2">
+                <div id="header" class="container">
+                    <div id="logo">
+                        <h1>ClothApp</h1>
+                        <p>find the perfect item</p>
+                    </div>
+
+                </div>
+                <!-- end #header -->
+                <div align=center id="banner-wrapper">
+                    <h1>בחר פריט</h1>
+                    <h2>vhhhhhhhhhh</h2>
+                    <div align=center>
+                       <!-- <button id="babyBtn" ng-click="filterParams.gender='baby'; filterItems()">Baby</button> -->
+                        <button id="bagBtn" ng-click="filterParams.type='bags-wallets'; filterItems()"><img src="images/bag.png"></button>
+                        <button id="swimsuitBtn" ng-click="filterParams.type='swimwear'; filterItems()"><img src="images/swimsuit.png"></button>
+                        <button id="shoesBtn" ng-click="filterParams.type='shoes'; filterItems()"><img src="images/shoes.png"></button>
+                        <button id="skirtBtn" ng-click="filterParams.type='skirt'; filterItems()"><img src="images/skirt.png"></button>
+                        <button id="pantsBtn" ng-click="filterParams.type='pants'; filterItems()"><img src="images/pants.png"></button>
+                        <button id="shirtBtn" ng-click="filterParams.type='tops'; filterItems()"><img src="images/shirt.png"></button>
+                        <button id="dressBtn" ng-click="filterParams.type='dresses'; filterItems()"><img src="images/dress.png"></button>
+                        
+                        <br>
+                        <button id="womenBtn" ng-click="filterParams.gender='women'; filterItems()">Women</button>
+                        <button id="menBtn" ng-click="filterParams.gender='men'; filterItems()">Men</button>
+                        <button id="allBtn" ng-click="filterParams.gender=''; filterItems()">הכל</button>
+                        <br>
+                        <p>:מחיר</p><select name="choosePrice" ng-model="filterParams.upToPrice" ng-change="filterItems()">
+                             <option ng-repeat="price in upToPriceList" value={{price.id}}>{{price.label}}</option> 
+                            </select>
+                           
+                         <br> 
+                    </div>
+
+                </div>
+                <div id="page">
+                    <div id="content">
+                        <div ng-repeat="item in items" class="img">
+                            <img src=" {{item.MainImage}}">
+                            <div class="desc">
+                                <span><b>קסטרו</b></span>
+                                <span> - {{item.Name}}</span>
+                                <span class="price">{{item.Price}}₪</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="clear: both;">&nbsp;</div>
+                </div>
+                <!-- end #page -->
+            </div>
+        </div>
+
+        <div id="footer">
+            <p>Copyright (c) 2016 ClothApp.co.il. All rights reserved</p>
+        </div>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="filters.js"></script> 
+    </body>
+</html>
+
