@@ -1,77 +1,164 @@
 <html ng-app="clothApp" dir="rtl">
     <head>
-
         <title>ClothApp</title>
         <meta name="keywords" content="" />
         <meta name="description" content="" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link href="http://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css" />
-        
         <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-      
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     </head>    
 
-    <body ng-controller="clothCtrl">
+    <body ng-controller="clothCtrl" ng-cloak="">
         <div id="wrapper">
-            <div id="wrapper2">
-                <div id="header" class="container">
-                    <div id="logo">
+            <div id="header" class="container">
+                <div id="logo">
+                    <a href="index.html">
                         <h1>ClothApp</h1>
-                        <p>find the perfect item</p>
-                    </div>
-
+                        <a href="mailto:contact.clothapp@gmail.com"><p>contact.clothapp@gmail.com</p></a>
+                    </a>
                 </div>
-                <!-- end #header -->
-                <div align=center id="banner-wrapper">
-                    <h1>בחר פריט</h1>
-                    <h2>vhhhhhhhhhh</h2>
-                    <div align=center>
-                       <!-- <button id="babyBtn" ng-click="filterParams.gender='baby'; filterItems()">Baby</button> -->
-                        <button id="bagBtn" ng-click="filterParams.type='bags-wallets'; filterItems()"><img src="images/bag.png"></button>
-                        <button id="swimsuitBtn" ng-click="filterParams.type='swimwear'; filterItems()"><img src="images/swimsuit.png"></button>
-                        <button id="shoesBtn" ng-click="filterParams.type='shoes'; filterItems()"><img src="images/shoes.png"></button>
-                        <button id="skirtBtn" ng-click="filterParams.type='skirt'; filterItems()"><img src="images/skirt.png"></button>
-                        <button id="pantsBtn" ng-click="filterParams.type='pants'; filterItems()"><img src="images/pants.png"></button>
-                        <button id="shirtBtn" ng-click="filterParams.type='tops'; filterItems()"><img src="images/shirt.png"></button>
-                        <button id="dressBtn" ng-click="filterParams.type='dresses'; filterItems()"><img src="images/dress.png"></button>
-                        
-                        <br>
-                        <button id="womenBtn" ng-click="filterParams.gender='women'; filterItems()">Women</button>
-                        <button id="menBtn" ng-click="filterParams.gender='men'; filterItems()">Men</button>
-                        <button id="allBtn" ng-click="filterParams.gender=''; filterItems()">הכל</button>
-                        <br>
-                        <p>:מחיר</p><select name="choosePrice" ng-model="filterParams.upToPrice" ng-change="filterItems()">
-                             <option ng-repeat="price in upToPriceList" value={{price.id}}>{{price.label}}</option> 
-                            </select>
-                           
-                         <br> 
-                    </div>
-
+                <div id="genderMenu">
+                    <ul>
+                        <button class="genderButton" id="menBtn" ng-click="trackEvent('Main Category', 'Filter', 'Men'); filterParams.gender='men'; filterItems()" ng-class="{'genderButtonMarked':filterParams.gender=='men'}" title="גברים">גברים</button>
+                        <button class="genderButton" id="womenBtn" ng-click="trackEvent('Main Category', 'Filter', 'Women'); filterParams.gender='women'; filterItems()" ng-class="{'genderButtonMarked':filterParams.gender=='women'}" title="נשים">נשים</button>
+                        <button class="genderButton" id="anyGender" ng-click="trackEvent('Main Category', 'Filter', 'Any'); filterParams.gender=''; filterItems()" ng-class="{'genderButtonMarked':filterParams.gender==''}" title="הכל">הכל</button>
+                    </ul>
                 </div>
-                <div id="page">
-                    <div id="content">
-                        <div ng-repeat="item in items" class="img">
-                            <img src=" {{item.MainImage}}">
-                            <div class="desc">
-                                <span><b>קסטרו</b></span>
-                                <span> - {{item.Name}}</span>
-                                <span class="price">{{item.Price}}₪</span>
-                            </div>
+            </div>
+            <!-- end #header -->
+            <div id="banner-wrapper">
+                <h2>מצא את הפריט המושלם</h2>
+                <h3>__</h3>
+                <h3>בחר פריט</h3>
+                <div id="banner-buttons">
+                    <button class="itemButton" id="bagBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Bags'); filterParams.type='bags-wallets'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='bags-wallets'}" title="תיקים וארנקים"><img ng-src="images/bag.png"></button>
+                    <button class="itemButton" id="shoesBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Shoes'); filterParams.type='shoes'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='shoes'}" title="נעליים"><img ng-src="images/shoes.png"></button>
+                    <button class="itemButton" id="swimsuitBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Swimsuit'); filterParams.type='swimwear'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='swimwear'}" title="בגדי ים"><img ng-src="images/swimsuit.png"></button>
+                    <button class="itemButton" id="skirtBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Skirt'); filterParams.type='skirts'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='skirts'}" title="חצאיות"><img ng-src="images/skirt.png"></button>
+                    <button class="itemButton" id="dressBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Dress'); filterParams.type='dresses'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='dresses'}" title="שמלות"><img ng-src="images/dress.png"></button>
+                    <button class="itemButton" id="pantsBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Pants'); filterParams.type='pants'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='pants'}" title="מכנסיים"><img ng-src="images/pants.png"></button>
+                    <button class="itemButton" id="shirtBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Shirt'); filterParams.type='shirts'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='shirts'}" title="חולצות"><img ng-src="images/shirt.png"></button>
+                    <button class="itemButton" id="coatBtn" ng-click="trackEvent('Sub Category', 'Filter', 'Coat'); filterParams.type='jackets'; filterItems()" ng-class="{'itemButtonMarked':filterParams.type=='jackets'}" title="מעילים"><img ng-src="images/coat.png"></button>
+                </div>
+            </div>
+            <div id="page" >
+                <div class="filter-bar" layout="row" layout-align="start center">
+                    <div class="dropDown">
+                        <md-input-container>
+                            <label>חנויות</label>
+                            <md-select ng-model="selectedStores" multiple ng-change="filterItems()">
+                                <md-optgroup label="בחר חנויות">
+                                    <md-option ng-value="store.name" ng-repeat="store in stores">{{store.hName}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div id="color-bar">
+                        <div dir="ltr" ng-cloak="">
+                            <md-fab-speed-dial md-open="menuIsOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode" layout="column" layout-align="end center">
+                                <md-fab-trigger>
+                                    <div md-theme="{{filterParams.color}}">
+                                        <md-button class="md-fab md-primary">
+                                            <div ng-if="filterParams.color == 'all' || filterParams.color == 'mixed'">
+                                                <md-icon md-svg-src="images/{{filterParams.color}}.svg"></md-icon>
+                                            </div>
+                                        </md-button>
+                                    </div>
+                                </md-fab-trigger>
+                                <md-fab-actions>
+                                    <div ng-repeat="color in colorsList">
+                                        <div md-theme="{{color.query}}">
+                                            <md-button ng-click="changeColor(color.query)" class="md-fab md-raised md-mini md-primary md-hue-1">
+                                                <md-tooltip md-direction="bottom" md-visible="tooltipVisible" md-autohide="false">
+                                                    {{color.label}}
+                                                </md-tooltip>
+                                                <div ng-if="color.query == 'all' || color.query == 'mixed'">
+                                                    <md-icon md-svg-src="images/{{color.query}}.svg"></md-icon>
+                                                </div>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                </md-fab-actions>
+                            </md-fab-speed-dial>
                         </div>
                     </div>
-
-                    <div style="clear: both;">&nbsp;</div>
                 </div>
-                <!-- end #page -->
+                <div class="filter-bar" layout="row" layout-align="start center">
+                    <div class="dropDown">
+                        <md-input-container>
+                            <label>מיון</label>
+                            <md-select ng-model="filterParams.sort" ng-change="filterItems()">
+                                <md-optgroup label="בחר מיון">
+                                    <md-option ng-repeat="sort in sorts" ng-value="sort.type">{{sort.hType}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="dropDown">
+                        <md-input-container>
+                            <label>מחיר</label>
+                            <md-select ng-model="filterParams.upToPrice" ng-change="filterItems()" ng-init="filterParams.upToPrice='10001'">
+                                <md-optgroup label="בחר מחיר">
+                                    <md-option ng-repeat="price in upToPriceList" ng-value="price.id">{{price.label}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="dropDown">
+                        <md-input-container>
+                            <label>מידה</label>
+                            <md-select ng-model="filterParams.size" ng-change="filterItems()">
+                                <md-optgroup label="בחר מידה">
+                                    <md-option ng-repeat="size in sizesList" ng-value="size.label">{{size.label}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div id="content">
+                    <div infinite-scroll='loadMore()' infinite-scroll-disabled='busy || endOfPage' infinite-scroll-distance='3'>
+                        <div ng-repeat="item in items" class="img" lazy-scroll="loadMore()" lazy-scroll-trigger="80">
+                            <a href="{{item.Webpage}}" target="_blank" ng-click="trackEvent('Item', 'Select', item.Webpage);">
+                            <img ng-src=" {{item.MainImage}}">
+                            <div class="desc" >
+                                <span><b>{{item.StoreName}}</b></span>
+                                <span> - &rlm; {{item.Name}}</span>
+                                <span class="price">{{item.Price}}₪</span>
+                            </div>
+                            </a>
+                        </div>
+                        <div ng-show='busy'>...Loading data</div>
+                        <div  id="noItemsFound" ng-show='items.length == 0'>לא נמצאו פריטים מתאימים</div>
+                    </div>
+                </div>
             </div>
+            <!-- end #page -->
         </div>
 
         <div id="footer">
             <p>Copyright (c) 2016 ClothApp.co.il. All rights reserved</p>
         </div>
-        
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="filters.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+        <script type='text/javascript' src='ng-infinite-scroll.js'></script>
+        <script src="filters.js"></script>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-80229341-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
     </body>
 </html>
 

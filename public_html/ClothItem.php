@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: niri
- * Date: 04/04/2016
- * Time: 20:35
- */
 class ClothItem
 {
     private $id;
@@ -15,8 +9,43 @@ class ClothItem
     private $description;
     private $webPage;
     private $images; //list of images urls
-    private $colors; //list of colors
+    private $colors = array(); //list of colors
     private $price;
+    private $storeName; //e.g. Castro
+    private $sizes;
+    private $colorsWithImage = array();
+
+    /**
+     * @return mixed
+     */
+    public function getSizes()
+    {
+        return $this->sizes;
+    }
+
+    /**
+     * @param mixed $sizes
+     */
+    public function setSizes($sizes)
+    {
+        $this->sizes = $sizes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStoreName()
+    {
+        return $this->storeName;
+    }
+
+    /**
+     * @param mixed $storeName
+     */
+    public function setStoreName($storeName)
+    {
+        $this->storeName = $storeName;
+    } //e.g Castro
 
     /**
      * @return mixed
@@ -31,7 +60,7 @@ class ClothItem
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = (float) $price;
     }
 
     /**
@@ -95,7 +124,7 @@ class ClothItem
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = mysql_real_escape_string($name);
     }
 
     /**
@@ -162,17 +191,95 @@ class ClothItem
         $this->colors = $colors;
     }
 
+    public function setColorsWithImages($colorsWithImage){
+        $this->colorsWithImages = $colorsWithImage;
+    }
+
 
     public function updateInDb()
     {
-        //$"INSERT IGNORE into Categories "
-        $query = "INSERT INTO Clothes (MainCategory,SubCategory,Name,Price,Webpage,MainImage) VALUES
-            ('$this->mainCategory','$this->subCategory','$this->name',$this->price, '$this->webPage', '$this->images' )";
+        $colorsIds= array();
+        $images = array();
+        foreach ($this->colors as $color){
+            $colorImage = null;
+            if (gettype($color) == "array"){
+                $colorImage = $color[1];
+                $color = $color[0];
+            }
+            $colorToInsert = mysql_real_escape_string($color);
+            $colorQuery = "INSERT IGNORE INTO Colors SET Name = '$colorToInsert'";
+            if (!mysql_query($colorQuery)){
+                die(mysql_error()." Your Query Was: ".$colorQuery);
+            }
+            $getColorIdQuery = "SELECT Id FROM Colors WHERE Name = '$colorToInsert'";
+            $getColorIdResult = mysql_query($getColorIdQuery);
+            if (!$getColorIdResult){
+                die(mysql_error()." Your Query Was: ".$getColorIdQuery);
+            }
+            $colorRow = mysql_fetch_assoc($getColorIdResult);
+            $colorsIds[] = $colorRow["Id"];
+            if ($colorImage != null)
+                $images[$colorRow["Id"]] = $colorImage;
+        }
 
-        mysql_query($query);
+        $sizesIds= array();
+        foreach ($this->sizes as $size){
+            $sizeQuery = "INSERT IGNORE INTO Sizes SET Name = '$size'";
+            if (!mysql_query($sizeQuery)){
+                die(mysql_error()." Your Query Was: ".$sizeQuery);
+            }
+
+            $getSizeIdQuery = "SELECT Id FROM Sizes WHERE Name = '$size'";
+            $getSizeIdResult = mysql_query($getSizeIdQuery);
+            if (!$getSizeIdResult){
+                die(mysql_error()." Your Query Was: ".$getSizeIdQuery);
+            }
+            $sizeRow = mysql_fetch_assoc($getSizeIdResult);
+            $sizesIds[] = $sizeRow["Id"];
+
+        }
+
+        //$"INSERT IGNORE into Categories "
+        $query = "INSERT INTO ClothesTemp (MainCategory,SubCategory,Name,Price,Webpage,MainImage,StoreName) VALUES
+            ('$this->mainCategory','$this->subCategory','$this->name',$this->price, '$this->webPage', '$this->images','$this->storeName')";
+
+
+        $result = mysql_query($query);
+        if (!$result)
+            die(mysql_error()." Your Query Was: ".$query);
+
+        $rowId =  mysql_insert_id();
+
+        foreach ($colorsIds as $colorId){
+            $image = '';
+            if (isset($images[$colorId]))
+                $image = $images[$colorId];
+
+            $clothesToColorQuery = "INSERT INTO ClothToColorTemp SET ClothId = $rowId, ColorId = $colorId, Image = '$image' ";
+            if (!mysql_query($clothesToColorQuery)){
+                die(mysql_error()." Your Query Was: ".$clothesToColorQuery);
+            }
+        }
+
+        foreach ($sizesIds as $sizeId){
+            $clothesToSizeQuery = "INSERT INTO ClothToSizeTemp SET ClothId = $rowId, SizeId = $sizeId";
+            if (!mysql_query($clothesToSizeQuery)){
+                die(mysql_error()." Your Query Was: ".$clothesToSizeQuery);
+            }
+        }
+
+
         //exec query
     }
 
+}
+
+function flushBuffers()
+{
+    ob_end_flush();
+    ob_flush();
+    flush();
+    ob_start();
 }
 
 ?>
