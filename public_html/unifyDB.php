@@ -25,11 +25,11 @@ $greenColors = array(
 );
 $redColors = array(
     "אדום", "בורדו", "קוראל נאון 259", "נייבי + אדום", "בורדו'", "אדום/ לבן", "Nautica Red", "Red Skies", "Tango Red",
-    "Light Mars Red", "Sailor Red", "שרי", "Persian Red", "Maritime Red", "Windsor wine"
+    "Light Mars Red", "Sailor Red", "שרי", "Persian Red", "Maritime Red", "Windsor wine", "Hibiscus"
 );
 $pinkColors = array(
-    "ורוד", "ורוד בהיר", "ניוד", "ורוד נאון", "ורוד בהיר.", "פוקסיה", "shocking pink", "Blushing Bride", "פוקסיה זוהר", "Hibiscus",
-	"Orchid Pink", "רוז"
+    "ורוד", "ורוד בהיר", "ורוד נאון", "ורוד בהיר.", "פוקסיה", "shocking pink", "Blushing Bride", "פוקסיה זוהר",
+	"Orchid Pink", "רוז", "ניו קורל", "Pale Coral", "קוראל כהה", "קוראל מלנז'", "קורל", "peach", "אפרסק"
 );
 $purpleColors = array(
     "סגול", "חציל", "11531 lavender", "לילך", "שזיף", "Aurora Purple", "Magenta Jewel"
@@ -44,13 +44,13 @@ $cyanColors = array(
 	"Cadet Heather", "Rich Teal", "Scuba Blue", "Waterfall Turq", "Aqua Isle", "טורקיז מלאנז'", "Clear Skies Blue", "Noon Blue"
 );
 $brownColors = array(
-    "חום", "כאמל", "קאמל", "מוקה", "khaki", "בז'", "חאקי", "חאקי מלנג'", "קרמל.", "קפה", "חרדל", "ברונז", "קאמל מלאנז'", "Hanger Brown HTR", "Light Tuscany Tan", "Tannin", "טבעי"
+    "חום", "כאמל", "קאמל", "מוקה", "khaki", "בז'", "חאקי", "חאקי מלנג'", "קרמל.", "קפה", "חרדל", "ברונז", "קאמל מלאנז'", "Hanger Brown HTR", "Light Tuscany Tan", "Tannin", "טבעי", "ניוד"
 );
 $yellowColors = array(
     "צהוב", "gold", "ליים", "צהוב תירס", "צהוב בהיר", "Sunfish Yellow", "Voyage Yellow", "Corn"
 );
 $orangeColors = array(
-    "כתום", "פפאיה", "peach", "קוראל", "קוראל מלנז'", "ניו קורל", "קורל", "אפרסק", "Sun Coast Orange", "Seafarer Orange", "Pale Coral", "Orange Poppy", "קוראל כהה"
+    "כתום", "קוראל", "פפאיה", "Sun Coast Orange", "Seafarer Orange", "Orange Poppy"
 );
 $mixedColors = array(
     "משולב", "מודפס", "פסים..", "הדפסה", "פסים כחול", "צבעוני", "שחור + לבן", "שחור מודפס", "פרחוני", "ללא צבע", "נמר",
